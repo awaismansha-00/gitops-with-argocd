@@ -1,0 +1,20 @@
+# Wave 2: the frontend, created only after the backend (wave 1) is Healthy.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: frontend }
+  template:
+    metadata:
+      labels: { app: frontend }
+    spec:
+      containers:
+        - name: frontend
+          image: nginx:1.27.1
+          ports:
+            - containerPort: 80

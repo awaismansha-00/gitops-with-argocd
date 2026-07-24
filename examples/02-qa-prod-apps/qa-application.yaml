@@ -1,0 +1,20 @@
+# QA Application — same repo, QA overlay, qa namespace.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-qa
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    targetRevision: main
+    path: examples/06-kustomize-overlays/overlays/qa
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: qa
+  syncPolicy:
+    automated: { selfHeal: true, prune: true }
+    syncOptions: [CreateNamespace=true]

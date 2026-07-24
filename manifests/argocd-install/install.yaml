@@ -1,0 +1,25 @@
+# Argo CD installation
+# ---------------------
+# The upstream install manifest is large and versioned, so this repo references it
+# rather than vendoring thousands of lines. Apply it directly:
+#
+#   kubectl create namespace argocd            # or: kubectl apply -f namespace.yaml
+#   kubectl apply -n argocd \
+#     -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+#
+# Pin to a release for reproducibility (recommended) — replace <version>:
+#
+#   kubectl apply -n argocd \
+#     -f https://raw.githubusercontent.com/argoproj/argo-cd/<version>/manifests/install.yaml
+#   # e.g. <version> = v2.13.0
+#
+# Namespace-scoped install (no cluster-wide RBAC):
+#   .../argo-cd/<version>/manifests/namespace-install.yaml
+#
+# To vendor the manifest into this repo instead (so Argo CD itself is managed by
+# GitOps), download the pinned install.yaml and commit it here:
+#
+#   curl -sSL -o install.yaml \
+#     https://raw.githubusercontent.com/argoproj/argo-cd/v2.13.0/manifests/install.yaml
+#
+# See docs/07-installing-argocd.md for full steps and verification.

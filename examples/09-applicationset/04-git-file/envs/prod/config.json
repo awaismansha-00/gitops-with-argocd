@@ -1,0 +1,5 @@
+{
+  "env": "prod",
+  "namespace": "prod",
+  "overlayPath": "examples/06-kustomize-overlays/overlays/prod"
+}

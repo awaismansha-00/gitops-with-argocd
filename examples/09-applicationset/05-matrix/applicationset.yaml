@@ -1,0 +1,40 @@
+# Matrix generator: combines TWO child generators and produces the cross-product
+# of their parameters. Here: git-directory (per overlay) x list (per region).
+# Parameters from both children are merged into each generated Application.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: myapp-matrix
+  namespace: argocd
+spec:
+  goTemplate: false
+  generators:
+    - matrix:
+        generators:
+          # Child 1: one entry per overlay directory (qa, prod) -> {{path.basename}}
+          - git:
+              repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+              revision: main
+              directories:
+                - path: examples/06-kustomize-overlays/overlays/*
+          # Child 2: one entry per region -> {{region}}
+          - list:
+              elements:
+                - region: us
+                - region: eu
+  template:
+    # Cross-product: qa-us, qa-eu, prod-us, prod-eu
+    metadata:
+      name: 'myapp-{{path.basename}}-{{region}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        targetRevision: main
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}-{{region}}'
+      syncPolicy:
+        automated: { selfHeal: true, prune: true }
+        syncOptions: [CreateNamespace=true]

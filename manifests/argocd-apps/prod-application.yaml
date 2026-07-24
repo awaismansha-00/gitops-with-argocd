@@ -1,0 +1,26 @@
+# Argo CD Application for the Production environment.
+# See docs/11-qa-prod-applications.md
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: demo
+  source:
+    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    targetRevision: main
+    path: examples/06-kustomize-overlays/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+  # Prod: keep self-heal to correct drift, but require a human to sync promotions.
+  # (No `automated.prune`/auto-sync here — sync manually or via change control.)
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: false
+    syncOptions:
+      - CreateNamespace=true

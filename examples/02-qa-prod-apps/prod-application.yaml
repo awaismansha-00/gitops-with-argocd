@@ -1,0 +1,21 @@
+# Prod Application — same repo, Prod overlay, prod namespace.
+# Prod keeps self-heal but does not auto-prune; promotions are deliberate.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    targetRevision: main
+    path: examples/06-kustomize-overlays/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+  syncPolicy:
+    automated: { selfHeal: true, prune: false }
+    syncOptions: [CreateNamespace=true]

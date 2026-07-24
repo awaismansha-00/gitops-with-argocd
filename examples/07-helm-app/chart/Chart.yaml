@@ -1,0 +1,6 @@
+apiVersion: v2
+name: myapp
+description: A minimal demo Helm chart deployed by Argo CD
+type: application
+version: 0.1.0        # chart version
+appVersion: "1.27.1"  # default app/image version

@@ -1,0 +1,20 @@
+# Parent ("root") Application. Its source path is a folder full of child
+# Application manifests. Syncing this one creates/updates all the children.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bootstrap
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    targetRevision: main
+    path: examples/08-app-of-apps/apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd          # children are Applications, which live in argocd
+  syncPolicy:
+    automated: { selfHeal: true, prune: true }

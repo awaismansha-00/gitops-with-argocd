@@ -1,0 +1,30 @@
+# Cluster generator: one Application per registered cluster that matches the
+# selector. Great for rolling the same app out across a fleet.
+# The generator exposes {{name}} and {{server}} (plus any cluster labels).
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: myapp-clusters
+  namespace: argocd
+spec:
+  goTemplate: false
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            environment: qa      # only clusters labelled environment=qa
+  template:
+    metadata:
+      name: 'myapp-{{name}}'     # {{name}} = the registered cluster name
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        targetRevision: main
+        path: examples/06-kustomize-overlays/overlays/qa
+      destination:
+        server: '{{server}}'     # the cluster's API server URL
+        namespace: qa
+      syncPolicy:
+        automated: { selfHeal: true, prune: true }
+        syncOptions: [CreateNamespace=true]

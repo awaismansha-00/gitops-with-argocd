@@ -1,0 +1,36 @@
+# Argo CD RBAC: grant read-only access to most users.
+# See docs/09-secure-argocd-with-ingress-tls.md (RBAC section)
+#
+# Argo CD reads its RBAC policy from the `argocd-rbac-cm` ConfigMap. Applying this
+# manifest patches that ConfigMap. Group names on the right of `g,` lines come from
+# your SSO provider (or use local users).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  # Everyone with no explicit role gets read-only.
+  policy.default: role:readonly
+
+  policy.csv: |
+    # --- read-only role: view apps, projects, repos; no mutations ---
+    p, role:readonly, applications, get, */*, allow
+    p, role:readonly, projects, get, *, allow
+    p, role:readonly, repositories, get, *, allow
+    p, role:readonly, clusters, get, *, allow
+    p, role:readonly, logs, get, */*, allow
+
+    # --- example: a QA deployer role scoped to the demo project ---
+    p, role:qa-deployer, applications, get, demo/*, allow
+    p, role:qa-deployer, applications, sync, demo/*, allow
+
+    # --- map SSO groups to roles (replace with your real group names) ---
+    g, my-org:viewers, role:readonly
+    g, my-org:qa-team, role:qa-deployer
+
+  # Optional: which OIDC claim carries group membership.
+  scopes: '[groups]'

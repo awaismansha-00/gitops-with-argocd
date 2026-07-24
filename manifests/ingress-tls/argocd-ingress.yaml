@@ -1,0 +1,67 @@
+# Ingress exposing the Argo CD server with TLS.
+# See docs/09-secure-argocd-with-ingress-tls.md
+#
+# This example assumes TLS is terminated at the Ingress and that argocd-server runs
+# in insecure mode behind it. To do that, set the server to insecure once:
+#
+#   kubectl -n argocd patch configmap argocd-cmd-params-cm \
+#     --type merge -p '{"data":{"server.insecure":"true"}}'
+#   kubectl -n argocd rollout restart deploy/argocd-server
+#
+# Replace `argocd.example.com` with your hostname and point DNS at the Ingress.
+#
+# --- Option A: NGINX Ingress + cert-manager (self-managed / on-prem / any cloud) ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server
+  namespace: argocd
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - argocd.example.com
+      secretName: argocd-server-tls   # created by cert-manager
+  rules:
+    - host: argocd.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
+---
+# --- Option B: AWS ALB Ingress + ACM certificate (EKS) ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: argocd-server-alb
+#   namespace: argocd
+#   annotations:
+#     alb.ingress.kubernetes.io/scheme: internet-facing        # or: internal
+#     alb.ingress.kubernetes.io/target-type: ip
+#     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+#     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:REGION:ACCOUNT:certificate/ID
+#     alb.ingress.kubernetes.io/backend-protocol: HTTP
+#     # ExternalDNS can create the Route 53 record automatically:
+#     external-dns.alpha.kubernetes.io/hostname: argocd.example.com
+# spec:
+#   ingressClassName: alb
+#   rules:
+#     - host: argocd.example.com
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: argocd-server
+#                 port:
+#                   number: 80

@@ -1,0 +1,25 @@
+# Argo CD Application for the QA environment.
+# See docs/11-qa-prod-applications.md
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-qa
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: demo
+  source:
+    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    targetRevision: main
+    path: examples/06-kustomize-overlays/overlays/qa
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: qa
+  # QA: full automation for fast feedback.
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

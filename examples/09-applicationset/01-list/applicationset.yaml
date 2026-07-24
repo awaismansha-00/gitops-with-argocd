@@ -1,0 +1,31 @@
+# List generator: one Application per hard-coded element.
+# Produces: myapp-qa, myapp-prod
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: myapp-list
+  namespace: argocd
+spec:
+  goTemplate: false
+  generators:
+    - list:
+        elements:
+          - env: qa
+            namespace: qa
+          - env: prod
+            namespace: prod
+  template:
+    metadata:
+      name: 'myapp-{{env}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        targetRevision: main
+        path: 'examples/06-kustomize-overlays/overlays/{{env}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated: { selfHeal: true, prune: true }
+        syncOptions: [CreateNamespace=true]

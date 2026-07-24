@@ -1,0 +1,9 @@
+# Wave 0: configuration that later resources depend on.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+data:
+  GREETING: "hello from wave 0"

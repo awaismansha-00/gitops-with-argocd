@@ -1,0 +1,38 @@
+# AppProject: a governance/security boundary for the demo applications.
+# See docs/12-appproject.md
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: demo
+  namespace: argocd
+  # Keep the project from being deleted while apps still reference it.
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Demo project for the gitops-with-argocd repo
+
+  # Only this repository may be used as a source.
+  sourceRepos:
+    - https://github.com/DexterCage97/gitops-with-argocd.git
+
+  # Only these cluster/namespace destinations are allowed.
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: qa
+    - server: https://kubernetes.default.svc
+      namespace: prod
+
+  # Restrict cluster-scoped resources to just what these apps need.
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+
+  # Allow common namespaced resources; block things these apps shouldn't manage.
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceBlacklist:
+    - group: ''
+      kind: ResourceQuota
+    - group: ''
+      kind: LimitRange

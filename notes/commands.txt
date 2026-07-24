@@ -1,0 +1,53 @@
+Useful Argo CD commands
+=======================
+
+Install
+-------
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl get pods -n argocd
+kubectl rollout status deploy/argocd-server -n argocd
+
+Initial admin password
+-----------------------
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
+Access the UI
+-------------
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+# then open https://localhost:8080  (user: admin)
+
+CLI login
+---------
+argocd login localhost:8080 --username admin --password <password> --insecure
+argocd account update-password
+
+Applications
+------------
+argocd app list
+argocd app get <app>
+argocd app sync <app>
+argocd app diff <app>
+argocd app history <app>
+argocd app rollback <app> <history-id>
+argocd app delete <app>
+
+Apply resources declaratively
+-----------------------------
+kubectl apply -f manifests/argocd-apps/app-project.yaml
+kubectl apply -f manifests/argocd-apps/qa-application.yaml
+kubectl apply -f manifests/argocd-apps/prod-application.yaml
+
+Repos & clusters
+----------------
+argocd repo add https://github.com/ORG/REPO.git --username <user> --password <token>
+argocd repo add git@github.com:ORG/REPO.git --ssh-private-key-path ./deploy_key
+argocd repo list
+argocd cluster add <kube-context>
+argocd cluster list
+
+Debugging
+---------
+kubectl -n argocd logs deploy/argocd-repo-server
+kubectl -n argocd logs statefulset/argocd-application-controller
+kubectl -n <ns> get events --sort-by=.lastTimestamp

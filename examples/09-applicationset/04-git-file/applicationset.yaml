@@ -1,0 +1,31 @@
+# Git file generator: one Application per config file matched in the repo.
+# Each config.json is parsed and its keys become template parameters.
+# Exposes the JSON keys ({{env}}, {{namespace}}, {{overlayPath}}) plus {{path...}}.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: myapp-git-file
+  namespace: argocd
+spec:
+  goTemplate: false
+  generators:
+    - git:
+        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        revision: main
+        files:
+          - path: examples/09-applicationset/04-git-file/envs/**/config.json
+  template:
+    metadata:
+      name: 'myapp-{{env}}'          # from the JSON file
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        targetRevision: main
+        path: '{{overlayPath}}'      # path is driven by the config file
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated: { selfHeal: true, prune: true }
+        syncOptions: [CreateNamespace=true]

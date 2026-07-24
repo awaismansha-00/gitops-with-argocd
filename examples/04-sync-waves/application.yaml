@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sync-waves-demo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    targetRevision: main
+    path: examples/04-sync-waves
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sync-waves
+  syncPolicy:
+    automated: { selfHeal: true, prune: true }
+    syncOptions: [CreateNamespace=true]

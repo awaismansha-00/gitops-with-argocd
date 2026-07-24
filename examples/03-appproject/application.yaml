@@ -1,0 +1,23 @@
+# An Application bound to the restricted-demo project.
+# It reuses the nginx manifests from Example 01, but is now constrained by the
+# project: it can only deploy from this repo, into restricted-demo, and only the
+# whitelisted resource kinds (Deployment, Service, ConfigMap).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-restricted
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: restricted-demo
+  source:
+    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    targetRevision: main
+    path: examples/01-basic-nginx-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: restricted-demo
+  syncPolicy:
+    automated: { selfHeal: true, prune: true }
+    syncOptions: [CreateNamespace=true]

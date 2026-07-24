@@ -1,0 +1,20 @@
+# Child Application: the basic nginx app from Example 01.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: child-nginx
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    targetRevision: main
+    path: examples/01-basic-nginx-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nginx
+  syncPolicy:
+    automated: { selfHeal: true, prune: true }
+    syncOptions: [CreateNamespace=true]

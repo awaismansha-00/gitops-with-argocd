@@ -1,0 +1,27 @@
+# Argo CD Application that renders the local Helm chart and deploys it.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helm-app
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    targetRevision: main
+    path: examples/07-helm-app/chart
+    helm:
+      valueFiles:
+        - values.yaml
+      # CI can bump the deployed version by overriding this parameter in Git.
+      parameters:
+        - name: image.tag
+          value: "1.27.1"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: helm-demo
+  syncPolicy:
+    automated: { selfHeal: true, prune: true }
+    syncOptions: [CreateNamespace=true]

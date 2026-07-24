@@ -1,0 +1,35 @@
+# Wave 1: the backend, which consumes the ConfigMap from wave 0.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: backend }
+  template:
+    metadata:
+      labels: { app: backend }
+    spec:
+      containers:
+        - name: backend
+          image: nginx:1.27.1
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: app-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  selector: { app: backend }
+  ports:
+    - port: 80
+      targetPort: 80

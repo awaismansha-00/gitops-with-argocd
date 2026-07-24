@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# QA overlay: 1 replica, a QA-tagged image, and a qa- name prefix.
+resources:
+  - ../../base
+namePrefix: qa-
+replicas:
+  - name: myapp
+    count: 1
+images:
+  - name: nginx
+    newTag: 1.27.1
+commonLabels:
+  environment: qa

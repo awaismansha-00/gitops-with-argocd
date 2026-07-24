@@ -1,0 +1,31 @@
+# Git directory generator: one Application per directory matched in the repo.
+# Here it globs the Kustomize overlays and creates an app per environment folder.
+# Exposes {{path}}, {{path.basename}}, {{path.basenameNormalized}}.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: myapp-git-dir
+  namespace: argocd
+spec:
+  goTemplate: false
+  generators:
+    - git:
+        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        revision: main
+        directories:
+          - path: examples/06-kustomize-overlays/overlays/*
+  template:
+    metadata:
+      name: 'myapp-{{path.basename}}'   # basename of the dir: qa, prod
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        targetRevision: main
+        path: '{{path}}'                # the matched overlay directory
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated: { selfHeal: true, prune: true }
+        syncOptions: [CreateNamespace=true]

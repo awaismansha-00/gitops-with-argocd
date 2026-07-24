@@ -1,0 +1,25 @@
+# A restrictive AppProject used as a security boundary for this example.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: restricted-demo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Only this repo may deploy, and only into the restricted-demo namespace
+  sourceRepos:
+    - https://github.com/DexterCage97/gitops-with-argocd.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: restricted-demo
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: apps
+      kind: Deployment
+    - group: ''
+      kind: Service
+    - group: ''
+      kind: ConfigMap

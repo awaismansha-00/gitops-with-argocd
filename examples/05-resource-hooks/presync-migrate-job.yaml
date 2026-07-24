@@ -1,0 +1,20 @@
+# PreSync hook: runs BEFORE the main sync (e.g. a database migration).
+# Deleted automatically once it succeeds.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrate
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      name: db-migrate
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: busybox:1.36
+          command: ["sh", "-c", "echo 'running migrations...'; sleep 5; echo done"]
