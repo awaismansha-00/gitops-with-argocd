@@ -15,7 +15,7 @@ project):
 2. **Versioned and immutable** — the desired state is stored in Git, giving you a
    complete, versioned, immutable history. Every change is a commit.
 3. **Pulled automatically** — approved changes to the desired state are pulled into
-   the system automatically, without manual `kubectl apply`.
+   the system automatically, without applying manually.
 4. **Continuously reconciled** — software agents continuously observe the live
    state and reconcile it back to the desired state, correcting any drift.
 
@@ -31,19 +31,21 @@ Using Git for desired state gives you, for free, everything Git already does wel
 
 ## A simple mental model
 
+![GitOps Flow Diagram](../assets/diagrams/gitops-flow.png)
+
 ```
-Desired state (Git)  ──►  Reconciler (Argo CD)  ──►  Live state (Kubernetes)
+Desired state (Git)  ──►  Reconciler / Agent  ──►  Live state (Kubernetes)
         ▲                                                    │
         └──────────────── observed drift ────────────────────┘
 ```
 
 The reconciler's only job is to make the live state equal the desired state, and to
-keep it that way. In this repo the reconciler is **Argo CD**.
+keep it that way. The reconciler is an automated GitOps agent running inside or alongside the target environment.
 
 ## What GitOps is *not*
 
 - It is **not** just "storing YAML in Git." Storing manifests in Git and then
-  running `kubectl apply` from a CI pipeline is *pipeline-driven CD*, not GitOps —
+  applying manually or running direct imperative commands from a CI pipeline is *pipeline-driven CD*, not GitOps —
   there is no continuous reconciliation and drift is not corrected.
 - It is **not** limited to application deployment; it applies equally to cluster
   configuration, infrastructure, and policy.
@@ -56,4 +58,3 @@ keep it that way. In this repo the reconciler is **Argo CD**.
 ## References
 
 - OpenGitOps principles — https://opengitops.dev/
-- Argo CD docs — https://argo-cd.readthedocs.io/

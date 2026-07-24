@@ -13,6 +13,8 @@ controls, and prefer private/VPN access where possible.
 
 ## HTTPS/TLS for the UI
 
+![Ingress TLS Architecture](../assets/diagrams/ingress-tls-flow.png)
+
 Terminate TLS in front of `argocd-server`. Two common approaches:
 
 - **Terminate at the Ingress** — the Ingress holds the certificate; run

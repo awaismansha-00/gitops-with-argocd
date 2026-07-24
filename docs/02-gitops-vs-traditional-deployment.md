@@ -10,7 +10,7 @@ In a classic pipeline the CI/CD system has credentials to the cluster and *pushe
 changes:
 
 ```
-git push ─► CI builds & tests ─► CD pipeline runs `kubectl apply` / `helm upgrade`
+git push ─► CI builds & tests ─► CD pipeline runs deployment commands (e.g. kubectl apply / helm upgrade)
 ```
 
 Characteristics:
@@ -18,7 +18,7 @@ Characteristics:
 - The pipeline holds **cluster credentials** and reaches into the cluster.
 - The "real" desired state is whatever the pipeline last ran — not necessarily what
   is in Git.
-- **Drift** (someone runs `kubectl edit` by hand) is invisible and uncorrected.
+- **Drift** (someone edits cluster resources manually) is invisible and uncorrected.
 - Rollbacks mean re-running an older pipeline.
 
 ## GitOps deployment
@@ -26,7 +26,7 @@ Characteristics:
 In GitOps an in-cluster agent *pulls* the desired state from Git and reconciles it:
 
 ```
-git push ─► agent (Argo CD) detects change ─► agent syncs cluster to match Git
+git push ─► GitOps agent detects change ─► agent syncs cluster to match Git
 ```
 
 Characteristics:
@@ -35,9 +35,13 @@ Characteristics:
   match it.
 - The agent runs **inside** the cluster, so external CI systems don't need cluster
   credentials.
-- **Drift is detected and (optionally) auto-corrected** — the app shows as
-  `OutOfSync` and self-heal can revert manual changes.
+- **Drift is detected and (optionally) auto-corrected** — out-of-sync state is detected
+  and reconciliation can revert manual changes.
 - Rollback is `git revert`.
+
+## Visual Comparison
+
+![Traditional vs GitOps Comparison](../assets/diagrams/traditional-vs-gitops.png)
 
 ## Side-by-side
 
@@ -54,9 +58,9 @@ Characteristics:
 
 GitOps replaces the **CD** half, not the **CI** half. You still build, test, scan,
 and push images in CI. CI's final job becomes *updating the manifest/image tag in
-Git* — after that, Argo CD takes over. See
+Git* — after that, the GitOps agent takes over. See
 [20 — CI and GitOps Flow](20-ci-and-gitops-flow.md).
 
 ## References
 
-- Argo CD — Declarative GitOps CD — https://argo-cd.readthedocs.io/
+- OpenGitOps principles — https://opengitops.dev/

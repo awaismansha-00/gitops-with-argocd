@@ -5,6 +5,8 @@ pull-based GitOps. Understanding the pieces makes troubleshooting much easier.
 
 ## High-level flow
 
+![Argo CD Internal Architecture](../assets/diagrams/argocd-architecture.png)
+
 ```
         Git repo (desired state)
               │  clone / fetch

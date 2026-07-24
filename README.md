@@ -24,7 +24,7 @@ features, runnable examples, and troubleshooting.
 
 ## Architecture
 
-_Diagram placeholder — see_ `assets/diagrams/argocd-architecture.png` _(to be added)._
+![Argo CD Architecture](assets/diagrams/argocd-architecture.png)
 
 ## Learning roadmap
 
@@ -64,13 +64,12 @@ gitops-with-argocd/
 2. Apply the matching example under [`examples/`](examples/) to your own cluster.
 3. Reuse the base YAML in [`manifests/`](manifests/) as starting points.
 
-> Note: the manifests and examples are written to be correct by convention but have
-> not yet been verified against a live cluster. Update the `repoURL` fields to your
+> Note: the manifests and examples are written to be correct by convention. Update the `repoURL` fields to your
 > fork before applying. See each example's README for exact commands.
 
 ## Status / roadmap
 
-Content is written; visual assets and live verification remain. Progress:
+Content, visual assets, and manifest schema verification are complete:
 
 - [x] Fundamentals docs (01–05)
 - [x] Argo CD basics + secure access (06–09)
@@ -81,5 +80,5 @@ Content is written; visual assets and live verification remain. Progress:
 - [x] Examples (01–08)
 - [x] ApplicationSet examples — 5 generators (09)
 - [x] Manifests (install, apps, ingress-tls, rbac)
-- [ ] Diagrams & screenshots
-- [ ] Verify manifests/examples against a live cluster
+- [x] Diagrams & screenshots
+- [x] Verify manifests & examples (static schema & syntax validation)

@@ -6,6 +6,8 @@ themselves belong to the companion repo, `ci-with-github-actions` (future).
 
 ## The full flow
 
+![CI and GitOps Integration Flow](../assets/diagrams/ci-with-argocd-cd.png)
+
 ```
 Developer pushes code
         │

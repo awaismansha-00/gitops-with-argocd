@@ -10,7 +10,7 @@ An external system (a CI/CD pipeline) is triggered by a change and **pushes** th
 new state into the cluster.
 
 ```
-Pipeline ──(has kubeconfig)──► kubectl apply / helm upgrade ──► Cluster
+Pipeline ──(has cluster credentials)──► deployment commands ──► Cluster
 ```
 
 Pros:
@@ -32,7 +32,7 @@ desired state in, applying it and continuously reconciling.
 ```
 Cluster ◄──(agent pulls)── Git repository
    │
-   └─ Argo CD reconciles live state to match Git, on a loop
+   └─ GitOps agent reconciles live state to match Git, on a loop
 ```
 
 Pros:
@@ -43,17 +43,17 @@ Pros:
 
 Cons:
 
-- Requires running and operating the agent (Argo CD).
+- Requires running and operating an in-cluster GitOps agent.
 - Slightly less immediate — the agent syncs on a polling interval or webhook.
 
-## Why Argo CD is pull-based
+## Why GitOps defaults to pull-based
 
-Argo CD runs as a controller *inside* the target cluster (or a management cluster).
-It clones your Git repo, compares the rendered manifests against live objects, and
-reconciles — no outside system is ever handed cluster credentials. This is what
-makes it a true GitOps tool rather than a scripted deployer.
+A pull-based GitOps agent runs as a controller inside the target environment (or a management cluster).
+It clones the Git repo, compares rendered manifests against live objects, and reconciles — no outside
+system is ever handed cluster credentials. This is what makes pull-based deployment the standard model
+for GitOps.
 
 ## Next
 
+- [04 — GitOps Tools Comparison](04-gitops-tools-comparison.md)
 - [05 — Why Argo CD?](05-why-argocd.md)
-- [06 — Argo CD Architecture](06-argocd-architecture.md)

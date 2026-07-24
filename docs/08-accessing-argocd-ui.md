@@ -4,6 +4,8 @@ By default the `argocd-server` service is `ClusterIP` — reachable only inside 
 cluster. There are three common ways to reach it, in increasing order of
 production-readiness.
 
+![Argo CD UI Dashboard](../assets/screenshots/argocd-ui.png)
+
 ## Retrieving the admin password
 
 ```bash

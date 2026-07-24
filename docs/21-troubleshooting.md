@@ -10,6 +10,8 @@ kubectl -n argocd logs statefulset/argocd-application-controller
 kubectl -n <ns> get events --sort-by=.lastTimestamp
 ```
 
+![Application Health & Diagnostics UI](../assets/screenshots/application-health.png)
+
 ## Application stuck OutOfSync
 - **Cause:** desired ≠ live, and sync hasn't run (manual policy) or a resource can't
   be applied.

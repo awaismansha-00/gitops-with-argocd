@@ -29,6 +29,12 @@ spec:
       - CreateNamespace=true
 ```
 
+## Visual Topology & Sync Status
+
+| Healthy & Synced State | OutOfSync State |
+| :---: | :---: |
+| ![Synced Application Tree](../assets/screenshots/synced-app.png) | ![OutOfSync Application Diff](../assets/screenshots/outofsync-app.png) |
+
 ## Key fields
 
 ### `spec.source`
