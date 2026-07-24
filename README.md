@@ -2,8 +2,6 @@
 
 A practical guide to understanding GitOps and implementing real-world Kubernetes deployments using Argo CD.
 
-> Status: ✅ Docs, examples, and manifests written. Diagrams/screenshots and live-cluster verification still to come.
-
 ## Introduction
 
 This repo is a hands-on learning resource for **GitOps**: operating Kubernetes
