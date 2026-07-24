@@ -13,7 +13,7 @@ features, runnable examples, and troubleshooting.
 ## What this repo covers
 
 - GitOps fundamentals and how it differs from traditional deployment
-- Argo CD architecture, installation, and secure access (TLS, RBAC, AppProjects)
+- Argo CD architecture, installation, and secure access (TLS, AppProjects)
 - Argo CD Applications: sources, destinations, and sync behaviour
 - Production patterns: App of Apps, ApplicationSet, sync waves, resource hooks
 - Kustomize and Helm with Argo CD
@@ -51,7 +51,7 @@ gitops-with-argocd/
 ├── README.md      # this landing page
 ├── docs/          # concept + how-to guides (01–21)
 ├── examples/      # small, self-contained Argo CD demos (01–08)
-├── manifests/     # reusable YAML (install, apps, ingress-tls, rbac)
+├── manifests/     # reusable YAML (install, apps, ingress-tls)
 ├── assets/        # diagrams and screenshots
 └── notes/         # scratch notes and handy commands
 ```
@@ -77,6 +77,6 @@ Content, visual assets, and manifest schema verification are complete:
 - [x] Troubleshooting (21)
 - [x] Examples (01–08)
 - [x] ApplicationSet examples — 5 generators (09)
-- [x] Manifests (install, apps, ingress-tls, rbac)
+- [x] Manifests (install, apps, ingress-tls)
 - [x] Diagrams & screenshots
 - [x] Verify manifests & examples (static schema & syntax validation)

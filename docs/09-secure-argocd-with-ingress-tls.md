@@ -63,8 +63,7 @@ p, role:readonly, applications, get, */*, allow
 g, my-org:viewers, role:readonly
 ```
 
-See [`manifests/rbac/readonly-user-rbac.yaml`](../manifests/rbac/readonly-user-rbac.yaml)
-and [12 — AppProject](12-appproject.md).
+See [12 — AppProject](12-appproject.md).
 
 ## AppProject restrictions
 
