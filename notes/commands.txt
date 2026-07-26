@@ -46,8 +46,8 @@ argocd repo list
 argocd cluster add <kube-context>
 argocd cluster list
 
-Multi-cluster hub model
------------------------
+Multi-cluster hub-spoke model
+-----------------------------
 kubectl config use-context <hub-context>
 argocd cluster add <spoke-qa-context> --name spoke-qa --label fleet=spoke --label environment=qa
 argocd cluster add <spoke-prod-context> --name spoke-prod --label fleet=spoke --label environment=prod

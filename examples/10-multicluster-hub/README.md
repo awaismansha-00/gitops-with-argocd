@@ -1,10 +1,10 @@
-# Example 10 — Multi-Cluster Hub Model
+# Example 10 — Multi-Cluster Hub-Spoke Model
 
 This example runs Argo CD in one **hub** cluster and deploys the same demo app to
 registered **spoke** clusters. It uses the ApplicationSet cluster generator to
 create one `Application` per matching remote cluster.
 
-Related docs: [22 — Multi-Cluster Hub Model](../../docs/22-multicluster-hub-model.md).
+Related docs: [22 — Multi-Cluster Hub-Spoke Model](../../docs/22-multicluster-hub-spoke-model.md).
 
 ## Layout
 

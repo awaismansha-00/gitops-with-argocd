@@ -34,7 +34,7 @@ features, runnable examples, and troubleshooting.
 5. **Production patterns** — `docs/14`–`docs/19`
 6. **CI + GitOps flow** — `docs/20`
 7. **Troubleshooting** — `docs/21`
-8. **Multi-cluster hub model** — `docs/22`
+8. **Multi-cluster hub-spoke model** — `docs/22`
 
 Work through the [`examples/`](examples/) folder alongside the docs, in order.
 
@@ -77,7 +77,7 @@ Content, visual assets, and manifest schema verification are complete:
 - [x] Production patterns (14–19)
 - [x] CI + GitOps flow (20)
 - [x] Troubleshooting (21)
-- [x] Multi-cluster hub model (22)
+- [x] Multi-cluster hub-spoke model (22)
 - [x] Examples (01–10)
 - [x] ApplicationSet examples — 5 generators (09)
 - [x] Hub-and-spoke ApplicationSet example (10)

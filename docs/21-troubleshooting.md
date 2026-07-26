@@ -43,7 +43,7 @@ kubectl -n <ns> get events --sort-by=.lastTimestamp
 - **Fix:** use `https://kubernetes.default.svc` for the local cluster, or register
   the remote cluster (`argocd cluster add`). Confirm the destination is allowed by
   the [AppProject](12-appproject.md). For the hub model, see
-  [22 — Multi-Cluster Hub Model](22-multicluster-hub-model.md).
+  [22 — Multi-Cluster Hub-Spoke Model](22-multicluster-hub-spoke-model.md).
 
 ## ApplicationSet did not create spoke apps
 - **Cause:** the cluster generator only sees registered clusters whose cluster

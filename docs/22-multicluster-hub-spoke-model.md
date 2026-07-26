@@ -1,4 +1,4 @@
-# Multi-Cluster Hub Model
+# Multi-Cluster Hub-Spoke Model
 
 In a **hub-and-spoke** Argo CD setup, Argo CD runs in one management cluster
 (`hub`) and deploys workloads into one or more registered workload clusters
@@ -8,6 +8,8 @@ the Kubernetes resources Argo CD reconciles.
 This is useful when you want one Argo CD control plane for a fleet of clusters.
 
 ## Model
+
+![Multi-Cluster Hub-Spoke Model](../assets/diagrams/multicluster-hub-spoke.png)
 
 ```text
 Git repo

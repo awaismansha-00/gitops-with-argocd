@@ -73,7 +73,7 @@ All five generators above are demonstrated, one per subfolder, in
 
 For a full hub-and-spoke rollout where Argo CD runs in one cluster and targets
 registered remote clusters, see
-[22 — Multi-Cluster Hub Model](22-multicluster-hub-model.md) and
+[22 — Multi-Cluster Hub-Spoke Model](22-multicluster-hub-spoke-model.md) and
 [Example 10](../examples/10-multicluster-hub/).
 
 ## Next
