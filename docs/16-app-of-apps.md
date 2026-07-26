@@ -29,7 +29,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    repoURL: https://github.com/awaismansha-00/gitops-with-argocd.git
     targetRevision: main
     path: examples/08-app-of-apps/apps      # folder of child Applications
   destination:

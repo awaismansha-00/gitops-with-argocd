@@ -51,7 +51,7 @@ Set the Application's `path` to the overlay directory:
 ```yaml
 spec:
   source:
-    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    repoURL: https://github.com/awaismansha-00/gitops-with-argocd.git
     targetRevision: main
     path: examples/06-kustomize-overlays/overlays/prod
 ```

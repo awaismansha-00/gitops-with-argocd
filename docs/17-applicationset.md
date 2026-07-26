@@ -26,7 +26,7 @@ spec:
     spec:
       project: demo
       source:
-        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        repoURL: https://github.com/awaismansha-00/gitops-with-argocd.git
         targetRevision: main
         path: 'examples/06-kustomize-overlays/overlays/{{env}}'
       destination:
@@ -70,6 +70,11 @@ numerous; use App of Apps when each child is bespoke.
 
 All five generators above are demonstrated, one per subfolder, in
 [Example 09 — ApplicationSet](../examples/09-applicationset/).
+
+For a full hub-and-spoke rollout where Argo CD runs in one cluster and targets
+registered remote clusters, see
+[22 — Multi-Cluster Hub Model](22-multicluster-hub-model.md) and
+[Example 10](../examples/10-multicluster-hub/).
 
 ## Next
 

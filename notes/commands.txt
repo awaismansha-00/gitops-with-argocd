@@ -46,6 +46,17 @@ argocd repo list
 argocd cluster add <kube-context>
 argocd cluster list
 
+Multi-cluster hub model
+-----------------------
+kubectl config use-context <hub-context>
+argocd cluster add <spoke-qa-context> --name spoke-qa --label fleet=spoke --label environment=qa
+argocd cluster add <spoke-prod-context> --name spoke-prod --label fleet=spoke --label environment=prod
+argocd cluster set <cluster-name> --label fleet=spoke --label environment=qa
+kubectl -n argocd get secrets -l argocd.argoproj.io/secret-type=cluster --show-labels
+kubectl apply -f examples/10-multicluster-hub/app-project.yaml
+kubectl apply -f examples/10-multicluster-hub/applicationset.yaml
+kubectl get applicationsets,applications -n argocd
+
 Debugging
 ---------
 kubectl -n argocd logs deploy/argocd-repo-server

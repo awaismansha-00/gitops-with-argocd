@@ -1,0 +1,46 @@
+# Generates one Application per registered spoke cluster.
+# Required cluster labels:
+#   fleet=spoke
+#   environment=qa or environment=prod
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: myapp-spoke-clusters
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+            fleet: spoke
+          matchExpressions:
+            - key: environment
+              operator: In
+              values:
+                - qa
+                - prod
+  template:
+    metadata:
+      name: 'myapp-{{.nameNormalized}}'
+      labels:
+        fleet: spoke
+        environment: '{{ index .metadata.labels "environment" }}'
+        target-cluster: '{{.nameNormalized}}'
+    spec:
+      project: multicluster-hub
+      source:
+        repoURL: https://github.com/awaismansha-00/gitops-with-argocd.git
+        targetRevision: main
+        path: 'examples/06-kustomize-overlays/overlays/{{ index .metadata.labels "environment" }}'
+      destination:
+        server: '{{.server}}'
+        namespace: '{{ index .metadata.labels "environment" }}'
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true

@@ -18,6 +18,7 @@ features, runnable examples, and troubleshooting.
 - Production patterns: App of Apps, ApplicationSet, sync waves, resource hooks
 - Kustomize and Helm with Argo CD
 - The end-to-end CI + GitOps flow
+- Multi-cluster hub-and-spoke deployments with one Argo CD control plane
 - Practical, self-contained examples and a troubleshooting guide
 
 ## Architecture
@@ -33,6 +34,7 @@ features, runnable examples, and troubleshooting.
 5. **Production patterns** — `docs/14`–`docs/19`
 6. **CI + GitOps flow** — `docs/20`
 7. **Troubleshooting** — `docs/21`
+8. **Multi-cluster hub model** — `docs/22`
 
 Work through the [`examples/`](examples/) folder alongside the docs, in order.
 
@@ -49,8 +51,8 @@ Work through the [`examples/`](examples/) folder alongside the docs, in order.
 ```
 gitops-with-argocd/
 ├── README.md      # this landing page
-├── docs/          # concept + how-to guides (01–21)
-├── examples/      # small, self-contained Argo CD demos (01–08)
+├── docs/          # concept + how-to guides (01–22)
+├── examples/      # small, self-contained Argo CD demos (01–10)
 ├── manifests/     # reusable YAML (install, apps, ingress-tls)
 ├── assets/        # diagrams and screenshots
 └── notes/         # scratch notes and handy commands
@@ -75,8 +77,10 @@ Content, visual assets, and manifest schema verification are complete:
 - [x] Production patterns (14–19)
 - [x] CI + GitOps flow (20)
 - [x] Troubleshooting (21)
-- [x] Examples (01–08)
+- [x] Multi-cluster hub model (22)
+- [x] Examples (01–10)
 - [x] ApplicationSet examples — 5 generators (09)
+- [x] Hub-and-spoke ApplicationSet example (10)
 - [x] Manifests (install, apps, ingress-tls)
 - [x] Diagrams & screenshots
 - [x] Verify manifests & examples (static schema & syntax validation)

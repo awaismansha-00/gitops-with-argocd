@@ -28,7 +28,7 @@ metadata:
 spec:
   description: Demo project for the gitops-with-argocd repo
   sourceRepos:
-    - https://github.com/DexterCage97/gitops-with-argocd.git
+    - https://github.com/awaismansha-00/gitops-with-argocd.git
   destinations:
     - server: https://kubernetes.default.svc
       namespace: qa

@@ -13,7 +13,7 @@ spec:
         generators:
           # Child 1: one entry per overlay directory (qa, prod) -> {{path.basename}}
           - git:
-              repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+              repoURL: https://github.com/awaismansha-00/gitops-with-argocd.git
               revision: main
               directories:
                 - path: examples/06-kustomize-overlays/overlays/*
@@ -29,7 +29,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        repoURL: https://github.com/awaismansha-00/gitops-with-argocd.git
         targetRevision: main
         path: '{{path}}'
       destination:

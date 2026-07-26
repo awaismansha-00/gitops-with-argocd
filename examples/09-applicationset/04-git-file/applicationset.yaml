@@ -10,7 +10,7 @@ spec:
   goTemplate: false
   generators:
     - git:
-        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        repoURL: https://github.com/awaismansha-00/gitops-with-argocd.git
         revision: main
         files:
           - path: examples/09-applicationset/04-git-file/envs/**/config.json
@@ -20,7 +20,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+        repoURL: https://github.com/awaismansha-00/gitops-with-argocd.git
         targetRevision: main
         path: '{{overlayPath}}'      # path is driven by the config file
       destination:

@@ -1,18 +1,20 @@
-# A restrictive AppProject used as a security boundary for this example.
+# AppProject for the multi-cluster hub model example.
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: restricted-demo
+  name: multicluster-hub
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  description: Only this repo may deploy, and only into the restricted-demo namespace
+  description: Deploy demo workloads from the hub Argo CD instance to spoke clusters
   sourceRepos:
     - https://github.com/awaismansha-00/gitops-with-argocd.git
   destinations:
-    - server: https://kubernetes.default.svc
-      namespace: restricted-demo
+    - server: '*'
+      namespace: qa
+    - server: '*'
+      namespace: prod
   clusterResourceWhitelist:
     - group: ''
       kind: Namespace

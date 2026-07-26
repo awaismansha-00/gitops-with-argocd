@@ -42,7 +42,16 @@ kubectl -n <ns> get events --sort-by=.lastTimestamp
   doesn't permit that destination.
 - **Fix:** use `https://kubernetes.default.svc` for the local cluster, or register
   the remote cluster (`argocd cluster add`). Confirm the destination is allowed by
-  the [AppProject](12-appproject.md).
+  the [AppProject](12-appproject.md). For the hub model, see
+  [22 — Multi-Cluster Hub Model](22-multicluster-hub-model.md).
+
+## ApplicationSet did not create spoke apps
+- **Cause:** the cluster generator only sees registered clusters whose cluster
+  Secrets match the selector labels.
+- **Fix:** confirm the spokes exist with `argocd cluster list`, then check labels:
+  `kubectl -n argocd get secrets -l argocd.argoproj.io/secret-type=cluster --show-labels`.
+  Add missing labels with
+  `argocd cluster set <cluster-name> --label fleet=spoke --label environment=qa`.
 
 ## Private repo access issue
 - **Cause:** missing/incorrect repository credentials Secret.

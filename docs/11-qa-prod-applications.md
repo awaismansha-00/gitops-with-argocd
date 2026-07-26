@@ -17,7 +17,7 @@ metadata:
 spec:
   project: demo
   source:
-    repoURL: https://github.com/DexterCage97/gitops-with-argocd.git
+    repoURL: https://github.com/awaismansha-00/gitops-with-argocd.git
     targetRevision: main
     path: examples/06-kustomize-overlays/overlays/qa
   destination:

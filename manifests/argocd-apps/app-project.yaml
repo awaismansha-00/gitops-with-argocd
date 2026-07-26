@@ -13,7 +13,7 @@ spec:
 
   # Only this repository may be used as a source.
   sourceRepos:
-    - https://github.com/DexterCage97/gitops-with-argocd.git
+    - https://github.com/awaismansha-00/gitops-with-argocd.git
 
   # Only these cluster/namespace destinations are allowed.
   destinations:
